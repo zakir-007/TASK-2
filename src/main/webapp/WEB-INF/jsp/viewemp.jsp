@@ -110,16 +110,48 @@
 </select>
 </div>
 	</div>
-	<div class="col">
+	
+	
+	
+	
+
+<div class="row my-5">
+	<div class="col-2">
 		<div class="dropdown">
-  <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-family: 'Times New Roman', serif;">
-    Emp with no designation 
-  </button>
- 	<select class="dropdown-menu">
-	<c:forEach var="empt" items="${unlist_dropdown}">
-		<option value="${empt.name}">${empt.name}</option>
-	</c:forEach>
-</select>
-</div>
+			<button class="btn btn-primary dropdown-toggle" type="button"
+				data-bs-toggle="dropdown" aria-expanded="false"
+				style="font-family: 'Times New Roman', serif;">Emp with no
+				designation</button>
+			<form:form method="post" id="form">
+				<select id="selection" class="dropdown-menu">
+					<c:forEach var="emo" items="${unlist_dropdown}">
+						<option value="${emo.id}">${emo.name}</option>
+					</c:forEach>
+				</select>
+				<button type="submit" onclick="btn()" id="noDesigBtn">Edit</button>
+			</form:form>
+		</div>
 	</div>
 </div>
+
+	
+	
+
+<script>
+
+
+function btn(){
+	
+	let url = "http://localhost:8080/SpringMVCPagination/editemp/";
+
+	document.getElementById('form').addEventListener('submit', (e) => {
+	    e.preventDefault();
+	  let selection = document.getElementById('selection').value;
+	  console.log(url + selection);
+	  window.location.href = url + selection;
+	});
+}
+
+</script>
+
+
