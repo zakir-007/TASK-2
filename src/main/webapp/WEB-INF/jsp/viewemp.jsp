@@ -76,8 +76,30 @@
 				<td>${emp.salary}</td>
 				<td>${emp.designation}</td>
 				<td><a href="editemp/${emp.id}">Edit</a></td>
-				<td><a href="deleteemp/${emp.id}"><i class="bi bi-trash3-fill" style="color:red;"></i></a></td>
+				<td>><i class="bi bi-trash3-fill" style="color:red;" data-bs-toggle="modal" data-bs-target="#deletemodal"></i></td>
 			</tr>
+			<!-- Delete Modal -->
+			<div class="modal fade" id="deletemodal" tabindex="-1"
+				aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="btn-close" data-bs-dismiss="modal"
+								aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							<p>Are you sure you want to delete<p>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary"
+								data-bs-dismiss="modal">Close</button>
+							<a href="deleteemp/${emp.id}"><button type="button"
+									class="btn btn-danger">Delete</button></a>
+						</div>
+					</div>
+				</div>
+			</div>
+
 		</c:forEach>
 	</tbody>
 </table>
@@ -86,8 +108,8 @@
 
 <br>
 
-
-
+// this button navigate to other page in order to add an employee details 
+ 
 <button id="addEmp"><a href="empform"  id="empLink">Add New Employee</a></button>
 
 
@@ -123,3 +145,68 @@
 </div>
 	</div>
 </div>
+
+
+
+<!-- MODAL TO ADD EMPLOYEE TO DATABASE -->
+
+<!-- Button modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal"
+	data-bs-target="#exampleModal">Add Employee</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1"
+	aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal"
+					aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<form id="myForm" method="post" action="save" name="myForm">
+					<div class="mb-3">
+						<label for="name" class="form-label">Name</label> <input
+							type="text" class="form-control" id="name" name="name">
+					</div>
+					<div class="mb-3">
+						<label for="email" class="form-label">Designation</label> <input
+							type="text" class="form-control" id="salary" name="salary">
+					</div>
+					<div class="mb-3">
+						<label for="email" class="form-label">salary</label> <input
+							type="text" class="form-control" id="designation"
+							name="designation">
+					</div>
+					<button type="submit" class="btn btn-primary">Submit</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!-- HANDLER FOR THE MODAL  -->
+<script>
+$(document).ready(function() {
+	  $('#myForm').submit(function(event) {
+	    event.preventDefault();
+	    var name = $('#name').val();
+	    var designation = $('#designation').val();
+	    var salary = $('#salary').val();
+	    $.ajax({
+	      url: 'save',
+	      type: 'POST',
+	      data: {
+	        'name': name,
+	        'designation': designation,
+	        'salary':salary
+	      },
+	      success: function(response) {
+	    	  window.location.href = "http://localhost:8080/SpringMVCPagination/viewemp";
+	      }
+	    });
+	  });
+	});
+</script>
